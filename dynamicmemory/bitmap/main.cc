@@ -1,5 +1,7 @@
 #include <iostream>
-#include "Color.hh"
+#include "color.h"
+#include "bitmap.h"
+
 using namespace std;
 
 int main() {
@@ -9,7 +11,7 @@ int main() {
 	Color BLUE(0,255,0);
 	Color GREEN(0,0,255);
 	Color WHITE(255,255,255);
-	
+	Color BLACK(0, 0, 0);
 	
 	b.line(0,0,   19,19, RED);
 	b.line(0,5,   29,10, BLUE); //Bresenham algorithm
