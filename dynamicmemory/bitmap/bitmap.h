@@ -15,6 +15,11 @@ public:
 			}
 		}
 	}
+
+	~Bitmap(){
+		delete [] s;
+	}
+
 	void line(uint8_t x1, uint8_t x2, uint8_t y1, uint8_t y2, const Color& c1){
 		double deltax = x2 - x1;
 		double deltay = y2 - y1;
@@ -84,7 +89,15 @@ public:
 	}
 
 	void ellipse(uint8_t x1, uint8_t y1, uint8_t width, uint8_t height, const Color& c1){
-		
+		for (int i = y1 - (height/2); i < y1 + (height/2); i++){
+			for (int j = x1 - (width/2); j < x1 + (width/2); j++){
+				double dx = double(j) / double(width);
+				double dy = double(i) / double(height);
+				if (((dx*dx)+(dy*dy)) <= 1){
+					s[(col*i)+j] = 'x';
+				}
+			}
+		}		
 	}	
 
 	friend std::ostream& operator << (std::ostream& o, const Bitmap& b) {
