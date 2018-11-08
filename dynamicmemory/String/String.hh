@@ -21,7 +21,7 @@ public:
 	~String();
 
 	//utility functions
-	int length();
+	uint32_t length();
 	void replace(char a, char b);
 	void insert(uint32_t, String msg);
 	String substring(uint32_t a, uint32_t b);
@@ -31,6 +31,6 @@ public:
 	String& operator =(const String& orig);
 	char  operator [](const uint32_t pos)const;
   char& operator [](uint32_t pos);
-	
+
   friend std::ostream& operator<<(std::ostream& stream, const String& str);
 };

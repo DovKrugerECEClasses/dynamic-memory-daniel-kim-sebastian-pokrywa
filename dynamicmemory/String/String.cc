@@ -8,17 +8,33 @@ String::String() {
 }
 
 String::String(const char str[]) {
-
+	int size = stringlen(str);
+	s = new char[size];
+	len = size;
+	capacity = size;
+	for(int i = 0; i < size; i++)
+		s[i] = str[i];
 }
 	
 String::String(const char str[], uint32_t mult) {
-
+	int size = stringlen(str) * mult;
+	s = new char[size];
+	len = size;
+	capacity = size;
+	int i = 0;
+	while( i < size){
+		for(int j = 0; j < stringlen(str); j++)
+			s[i++] = str[j];
+	}
 }
 
 String::~String() {
 	delete [] s;
 }
 
+uint32_t String::length(){
+	return len;
+}
 	//copy constructor
 String::String(const String& orig) {
 
