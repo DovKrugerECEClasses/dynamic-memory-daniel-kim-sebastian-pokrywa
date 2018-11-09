@@ -16,16 +16,16 @@ private:
 	}
 
 	void grow(int size){
-		char* temp = s;
 		while(size >= cap){
 			cap = 2*cap;
 		}
 		if(size < cap){
+			char* temp = s;
 			s = new char[cap];
 			for(int i = 0; i < len; i++)
 				s[i] = temp[i];
+			delete [] temp;
 		}	
-		delete [] temp;
 	}
 
 public:
