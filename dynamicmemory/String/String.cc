@@ -32,22 +32,75 @@ String::~String() {
 	delete [] s;
 }
 
-uint32_t String::length(){
+uint32_t String::length() const{
 	return len;
 }
 	//copy constructor
 String::String(const String& orig) {
-
+	s = new char[orig.length()];
+	for(int i = 0; i < orig.length(); i++){
+		s[i] = orig[i];
+	}
+	capacity = orig.length();
+	len = orig.length();
 }
+
+//operator functions
 String& String::operator =(const String& orig) {
+	char* temp = new char[orig.length()];
 
+	for(int i = 0; i < orig.length(); i++)	
+		temp[i] = orig[i];
+
+	s = new char[orig.length()];
+	for(int i = 0; i < orig.length(); i++)	
+		s[i] = temp[i];
+
+	capacity = orig.length();
+	len = orig.length();
+
+	delete [] temp;
+	return *this;
 }
 
-char String::operator [](const uint32_t pos)const {
+String& String::operator +=(const String& right) {
+	int size = right.length() + length();
+	char* temp = new char[size];
 
+	int i;
+	for(i = 0; i < length(); i++)
+		temp[i] = s[i];
+	for(int j = 0; j < right.length(); j++)
+		temp[i + j] = right[j];
+	
+	s = new char[size];
+	len = size;
+	capacity = size;
+
+	for(i = 0; i < length(); i++)
+		s[i] = temp[i];
+
+	delete [] temp;
+
+	return *this; 
+}
+String String::operator +(const String& right) {
+	int size = right.length() + length();
+	char* temp = new char[size];
+
+	int i;
+	for(i = 0; i < length(); i++)
+		temp[i] = s[i];
+	for(int j = 0; j < right.length(); j++)
+		temp[i + j] = right[j];
+
+	return String(temp);
+}
+char String::operator [](const uint32_t pos)const {
+	return s[pos];
 }
 char& String::operator [](uint32_t pos) {
-
+	return s[pos];
 }
 
 std::ostream& operator<<(std::ostream& stream, const String& str) {
