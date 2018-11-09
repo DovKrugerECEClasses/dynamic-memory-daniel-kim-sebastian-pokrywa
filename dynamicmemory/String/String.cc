@@ -91,7 +91,7 @@ String& String::operator =(const String& orig) {
 	for(int i = 0; i < orig.length(); i++)	
 		temp[i] = orig[i];
 
-	s = new char[orig.length()];
+	s = new char[orig.capacity()];
 	for(int i = 0; i < orig.length(); i++)	
 		s[i] = temp[i];
 
