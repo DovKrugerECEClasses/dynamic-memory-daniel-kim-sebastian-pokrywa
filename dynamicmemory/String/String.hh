@@ -24,7 +24,7 @@ public:
 	uint32_t length() const;
 	void replace(char a, char b);
 	void insert(uint32_t pos, String msg);
-	String substring(uint32_t pos, uint32_t length);
+	String substring(uint32_t pos, uint32_t length) const;
 	
 	//copy constructor
 	String(const String& orig);

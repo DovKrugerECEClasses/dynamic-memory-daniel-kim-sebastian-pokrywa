@@ -72,7 +72,7 @@ void String::insert(uint32_t pos, String msg){
 
 }
 	
-String String::substring(uint32_t pos, uint32_t length){
+String String::substring(uint32_t pos, uint32_t length) const{
 	char* temp = new char[length];
 
 	for(int i = 0; i < length; i++)
