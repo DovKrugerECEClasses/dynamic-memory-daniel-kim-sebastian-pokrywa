@@ -86,19 +86,11 @@ String::String(const String& orig) {
 
 //operator functions
 String& String::operator =(const String& orig) {
-	char* temp = new char[orig.capacity()];
-
-	for(int i = 0; i < orig.length(); i++)	
-		temp[i] = orig[i];
-
-	s = new char[orig.capacity()];
-	for(int i = 0; i < orig.length(); i++)	
-		s[i] = temp[i];
-
+	String copy(orig);
+	std::swap(copy.s, s);
 	cap = orig.capacity();
 	len = orig.length();
 
-	delete [] temp;
 	return *this;
 }
 
