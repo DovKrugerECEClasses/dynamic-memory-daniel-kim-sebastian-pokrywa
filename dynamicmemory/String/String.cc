@@ -75,13 +75,16 @@ String String::substring(uint32_t pos, uint32_t length) const{
 }
 
 //copy constructor
-String::String(const String& orig) {
-	s = new char[orig.capacity()];
-	for(int i = 0; i < orig.length(); i++){
-		s[i] = orig[i];
-	}
-	cap = orig.capacity();
-	len = orig.length();
+String::String(const String& orig) : len(orig.len), cap(orig.cap), s(new char[orig.cap]) {
+	uint64_t* src = (uint64_t*)orig.s;
+	uint64_t* dest = (uint64_t*)s;
+	uint32_t count;
+	for (count = len; count >= 8; count -= 8)
+		*dest++ = *src++;
+	char* pdest = (char*)dest;
+	char* psrc = (char*)src;
+	for ( ; count > 0; count--)
+		*pdest++ = *psrc++;
 }
 
 //operator functions
