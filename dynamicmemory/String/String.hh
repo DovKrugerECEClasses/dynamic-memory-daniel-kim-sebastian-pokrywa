@@ -37,7 +37,6 @@ public:
 
 	//utility functions
 	uint32_t length() const;
-	uint32_t capacity() const;
 	void replace(char a, char b);
 	void insert(uint32_t pos, String msg);
 	String substring(uint32_t pos, uint32_t length) const;

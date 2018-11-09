@@ -38,12 +38,8 @@ uint32_t String::length() const{
 	return len;
 }
 
-uint32_t String::capacity() const{
-	return cap;
-}
-
 void String::replace(char a, char b){
-	for(int i = 0; i < length(); i++){
+	for(int i = 0; i < len; i++){
 		if(s[i] == a)
 			s[i] = b;
 	}
@@ -56,11 +52,11 @@ void String::insert(uint32_t pos, String msg){
 	grow(size);
 
 	//shifting chars to make room for insert
-	for (int i = msg.length()+pos; i > pos; i--)
+	for (int i = msg.len+pos; i > pos; i--)
 		s[i+1] = s[i];
 
 	//the insert
-	for(int i = 0; i < msg.length(); i++)
+	for(int i = 0; i < msg.len; i++)
 		s[pos+i] = msg[i];
 
 }
@@ -91,31 +87,31 @@ String::String(const String& orig) : len(orig.len), cap(orig.cap), s(new char[or
 String& String::operator =(const String& orig) {
 	String copy(orig);
 	std::swap(copy.s, s);
-	cap = orig.capacity();
-	len = orig.length();
+	cap = orig.cap;
+	len = orig.len;
 
 	return *this;
 }
 
 String& String::operator +=(const String& right) {
-	int size = 2 * (right.length() + length());
+	int size = 2 * (right.len + len);
 	grow(size);
 
-	for(int i = 0; i < right.length(); i++)
-		s[length()+i] = right[i];
-	len = right.length()+length();
+	for(int i = 0; i < right.len; i++)
+		s[len+i] = right[i];
+	len = right.len+len;
 
 	return *this; 
 }
 
 String String::operator +(const String& right) const{
-	int size = 2 * (right.length() + length());
+	int size = 2 * (right.len + len);
 	char* temp = new char[size];
 
 	int i;
-	for(i = 0; i < length(); i++)
+	for(i = 0; i < len; i++)
 		temp[i] = s[i];
-	for(int j = 0; j < right.length(); j++)
+	for(int j = 0; j < right.len; j++)
 		temp[i + j] = right[j];
 
 	return String(temp);
