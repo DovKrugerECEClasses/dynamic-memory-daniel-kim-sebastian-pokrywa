@@ -2,28 +2,28 @@
 
 //constructors
 String::String() {
-	capacity = 1;
+	cap = 2;
 	len = 1;
-	s = new char[1];
+	s = new char[cap];
 	s[0] = ' ';
 }
 
 String::String(const char str[]) {
-	int size = stringlen(str);
+	int size = 2 * stringlen(str);
 	s = new char[size];
-	len = size;
-	capacity = size;
+	len = stringlen(str);
+	cap = size;
 	for(int i = 0; i < size; i++)
 		s[i] = str[i];
 }
 	
 String::String(const char str[], uint32_t mult) {
-	int size = stringlen(str) * mult;
+	int size = 2 * stringlen(str) * mult;
 	s = new char[size];
-	len = size;
-	capacity = size;
+	len = stringlen(str)*mult;
+	cap = size;
 	int i = 0;
-	while( i < size){
+	while( i < stringlen(str)*mult){
 		for(int j = 0; j < stringlen(str); j++)
 			s[i++] = str[j];
 	}
@@ -38,6 +38,10 @@ uint32_t String::length() const{
 	return len;
 }
 
+uint32_t String::capacity() const{
+	return cap;
+}
+
 void String::replace(char a, char b){
 	for(int i = 0; i < length(); i++){
 		if(s[i] == a)
@@ -47,28 +51,17 @@ void String::replace(char a, char b){
 
 void String::insert(uint32_t pos, String msg){
 	int size = msg.length() + length();
-	char* temp = new char[size];
-	
-	//big mess unsure how to do this a better way
-	int i;
-	for(i = 0; i < pos; i++)
-		temp[i] = s[i];
-	int tpos = i;
+
+	len = size;
+	grow(size);
+
+	//shifting chars to make room for insert
+	for (int i = msg.length()+pos; i > pos; i--)
+		s[i+1] = s[i];
 
 	//the insert
-	int j;
-	for(j = 0; j < msg.length(); j++)
-		temp[i+j] = msg[j];
-
-	//finishing rest of string
-	for(i=i+j; i < size; i++)
-		temp[i] = s[tpos++];
-	
-	//copy from temp to original
-	s = new char[size];
-	for(i = 0; i < size; i++)
-		s[i] = temp[i];
-	delete [] temp;
+	for(int i = 0; i < msg.length(); i++)
+		s[pos+i] = msg[i];
 
 }
 	
@@ -83,17 +76,17 @@ String String::substring(uint32_t pos, uint32_t length) const{
 
 //copy constructor
 String::String(const String& orig) {
-	s = new char[orig.length()];
+	s = new char[orig.capacity()];
 	for(int i = 0; i < orig.length(); i++){
 		s[i] = orig[i];
 	}
-	capacity = orig.length();
+	cap = orig.capacity();
 	len = orig.length();
 }
 
 //operator functions
 String& String::operator =(const String& orig) {
-	char* temp = new char[orig.length()];
+	char* temp = new char[orig.capacity()];
 
 	for(int i = 0; i < orig.length(); i++)	
 		temp[i] = orig[i];
@@ -102,7 +95,7 @@ String& String::operator =(const String& orig) {
 	for(int i = 0; i < orig.length(); i++)	
 		s[i] = temp[i];
 
-	capacity = orig.length();
+	cap = orig.capacity();
 	len = orig.length();
 
 	delete [] temp;
@@ -110,29 +103,18 @@ String& String::operator =(const String& orig) {
 }
 
 String& String::operator +=(const String& right) {
-	int size = right.length() + length();
-	char* temp = new char[size];
+	int size = 2 * (right.length() + length());
+	grow(size);
 
-	int i;
-	for(i = 0; i < length(); i++)
-		temp[i] = s[i];
-	for(int j = 0; j < right.length(); j++)
-		temp[i + j] = right[j];
-	
-	s = new char[size];
-	len = size;
-	capacity = size;
-
-	for(i = 0; i < length(); i++)
-		s[i] = temp[i];
-
-	delete [] temp;
+	for(int i = 0; i < right.length(); i++)
+		s[length()+i] = right[i];
+	len = right.length()+length();
 
 	return *this; 
 }
 
 String String::operator +(const String& right) const{
-	int size = right.length() + length();
+	int size = 2 * (right.length() + length());
 	char* temp = new char[size];
 
 	int i;

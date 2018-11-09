@@ -4,15 +4,30 @@
 
 class String {
 private:
-	uint32_t capacity;
+	uint32_t cap;
 	uint32_t len;
 	char* s;
+
 	uint32_t stringlen(const char* str) {
 		uint32_t count = 0;
 		while (*str++ != '\0')
 			count++;
 		return count;
 	}
+
+	void grow(int size){
+		char* temp = s;
+		while(size >= cap){
+			cap = 2*cap;
+		}
+		if(size < cap){
+			s = new char[cap];
+			for(int i = 0; i < len; i++)
+				s[i] = temp[i];
+			delete [] temp;
+		}	
+	}
+
 public:
   String();
 	String(const char str[]);
@@ -22,6 +37,7 @@ public:
 
 	//utility functions
 	uint32_t length() const;
+	uint32_t capacity() const;
 	void replace(char a, char b);
 	void insert(uint32_t pos, String msg);
 	String substring(uint32_t pos, uint32_t length) const;
