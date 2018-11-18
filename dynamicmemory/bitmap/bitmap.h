@@ -6,7 +6,34 @@ class Bitmap{
 private:
 	char *s;
 	int row, col;
-	
+
+public:
+Bitmap(int col, int row);	
+
+~Bitmap(){
+	delete [] s;
+}
+
+	void line(uint8_t x1, uint8_t x2, uint8_t y1, uint8_t y2, const Color& c1);
+
+	void horizLine(uint8_t x1, uint8_t x2, uint8_t y1 ,const Color& c1);
+
+	void vertLine(uint8_t x1, uint8_t y1, uint8_t y2, const Color& c1);
+
+	void fillRect(uint8_t x1, uint8_t y1, uint8_t width, uint8_t height,const Color& c1);
+
+	void drawRect(uint8_t x1, uint8_t y1, uint8_t width, uint8_t height, const Color& c1);
+
+	void ellipse(uint8_t x1, uint8_t y1, uint8_t width, uint8_t height, const Color& c1);
+
+	friend std::ostream& operator << (std::ostream& o, const Bitmap& b);
+};
+/*
+class Bitmap{
+private:
+	char *s;
+	int row, col;
+
 public:
 	Bitmap(int col, int row) : row(row), col(col), s(new char[row * col]){
 		for (int i = 0; i < row; i++){
@@ -97,8 +124,8 @@ public:
 					s[(col*i)+j] = 'x';
 				}
 			}
-		}		
-	}	
+		}
+	}
 
 	friend std::ostream& operator << (std::ostream& o, const Bitmap& b) {
 		for (int i = 0; i < b.row; i++){
@@ -110,3 +137,4 @@ public:
 		return o;
 	}
 };
+*/
