@@ -21,7 +21,7 @@ class Shape{
 
     Shape(double x, double y, double z);
 
-    void volume();
+    double volume();
 
     void translate(double x, double y, double z);
 };
@@ -30,12 +30,12 @@ class Cube:Shape{
     public:
 
     Cube(double x);
-    void volume();
+    double volume();
 };
 
 class Cylinder:Shape{
     public:
 
     Cylinder(double x, double y);
-    void volume();
+    double volume();
 };
