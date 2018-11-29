@@ -1,4 +1,32 @@
+#include <iostream>
+using namespace std;
 
+
+template<typename T>
+void sort(T a [], int size){
+	int i,j;
+	for(i = 0; i < size-1; i++){
+		for(j=0; j < size-i-1; j++){
+			if(a[j] > a[j+1])
+				swap(a[j], a[j+1]);
+		}
+	}
+}
+
+template<typename T>
+const void print(T a [], int size){
+	for(int i = 0; i < size; i++)
+		cout << a[i] << " ";
+	cout << endl;
+}
+
+template<typename T>
+const T sum(T a [], int size){
+	T sum = 0;
+	for(int i = 0; i < size; i++)
+		sum += a[i];
+	return sum;
+}
 
 int main() {
 	int a[] = {5, 4, 3, 1, 7, 8, 9, 2, 1};
